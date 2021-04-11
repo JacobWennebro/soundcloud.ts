@@ -104,9 +104,8 @@ export class Util {
             track = trackResolvable as SoundcloudTrack
             if (track.downloadable === true) {
                 const result = await axios.get(track.download_url, {responseType: "arraybuffer", params: {client_id: this.api.clientID}})
-                const dest = path.join(folder, `${track.title.replace(/\//g, "")}.${result.headers["x-amz-meta-file-type"]}`)
-                fs.writeFileSync(dest, Buffer.from(result.data, "binary"))
-                return dest
+                fs.writeFileSync(folder, Buffer.from(result.data, "binary"))
+                return folder
             } else {
                 return this.downloadTrackStream(track.permalink_url, track.title.replace(/\//g, ""), folder)
             }
